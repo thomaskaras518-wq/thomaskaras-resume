@@ -20,7 +20,7 @@ import { stamp, EMBLEMS } from './stamps.mjs';
 const CHRONOLOGY = [
   ['Manager, Data Platform &amp; Operations', 'UPSTACK',   'Jun 2025 – Present', 'roles/upstack-data-platform.html'],
   ['M&amp;A Integration Analyst',             'UPSTACK',   'Apr 2024 – May 2025', 'roles/upstack-ma-integration.html'],
-  ['Sr. Project Manager',                     'Lightpath', 'Jun 2023 – 2024',     'roles/lightpath.html'],
+  ['Sr. Project Manager',                     'Lightpath', 'Jun 2023 – Apr 2024', 'roles/lightpath.html'],
   ['Technical Product Manager / Scrum PO',    'Zayo Group','Oct 2021 – Jun 2023', 'roles/zayo-product.html'],
   ['Business Analyst',                        'Zayo Group','Sep 2020 – Sep 2021', 'roles/zayo-analyst.html'],
   ['Data Analyst Intern',                     'Zayo Group','Jun 2020 – Aug 2020', 'origins.html'],
@@ -112,7 +112,7 @@ const PAGES = [
   {
     slug: 'lightpath', out: 'roles/lightpath.html', depth: '../',
     no: '07', district: 'Mart',
-    title: 'Sr. Project Manager', org: 'Lightpath', dates: 'Jun 2023 – 2024',
+    title: 'Sr. Project Manager', org: 'Lightpath', dates: 'Jun 2023 – Apr 2024',
     loc: 'LIGHTPATH — REPORTING', keys: 'ROADMAP · DASHBOARDS · BACKLOG', yr: '2023—2024',
     lede: 'The mart layer: turning a warehouse into something a board can read, and a roadmap the business had actually agreed to.',
     sections: [
