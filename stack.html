@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The instrument bus — Thomas Karas</title>
+<meta name="description" content="Every system Thomas Karas works in, and what each one is actually for.">
+<meta property="og:title" content="The instrument bus — Thomas Karas">
+<meta property="og:description" content="Every system Thomas Karas works in, and what each one is actually for.">
+<meta property="og:image" content="assets/img/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23efe7d6'/%3E%3Cpath d='M16 7 27 13 16 19 5 13z' fill='none' stroke='%231c1814' stroke-width='1.6'/%3E%3Cpath d='M5 13v6l11 6 11-6v-6' fill='none' stroke='%231c1814' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Courier+Prime:wght@400;700&family=Spectral:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/journal.css">
+</head>
+<body>
+<a class="skip" href="#note">Skip to the field note</a>
+<div class="note-page">
+  <div class="topbar">
+    <a class="back" href="index.html">← Survey map</a>
+    <span class="label station-no">Instruments · 9 systems</span>
+  </div>
+
+  <header class="note-head" id="note">
+    <h1>The instrument bus</h1>
+    <p class="org">Every system on the map, and what each one is actually for</p>
+  </header>
+
+  <div class="poster">
+    <div class="poster-plate"><div class="plate-pending">
+        <span class="box" aria-hidden="true"></span>
+        <span class="label">Plate pending</span>
+        <span class="label">assets/img/plate-stack.jpg</span>
+      </div></div>
+    <div class="poster-paper">
+      <div class="poster-stamp"><svg class="stamp" viewBox="0 0 240 150" role="img"
+     aria-label="Carved stamp for this station" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="ink-stack-0" x="-15%" y="-15%" width="130%" height="130%"
+            color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.038" numOctaves="4"
+                    seed="3" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="3.1"
+                         xChannelSelector="R" yChannelSelector="G" result="carved"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.62" numOctaves="3"
+                    seed="20" result="grain"/>
+      <feColorMatrix in="grain" type="luminanceToAlpha" result="ga"/>
+      <feComponentTransfer in="ga" result="pits">
+        <feFuncA type="linear" slope="3.1" intercept="-1.72"/>
+      </feComponentTransfer>
+      <feComposite in="carved" in2="pits" operator="out"/>
+    </filter>
+    <filter id="ink-stack-1" x="-15%" y="-15%" width="130%" height="130%"
+            color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.038" numOctaves="4"
+                    seed="27" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="3.1"
+                         xChannelSelector="R" yChannelSelector="G" result="carved"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.62" numOctaves="3"
+                    seed="44" result="grain"/>
+      <feColorMatrix in="grain" type="luminanceToAlpha" result="ga"/>
+      <feComponentTransfer in="ga" result="pits">
+        <feFuncA type="linear" slope="3.1" intercept="-1.72"/>
+      </feComponentTransfer>
+      <feComposite in="carved" in2="pits" operator="out"/>
+    </filter>
+    <filter id="ink-stack-2" x="-15%" y="-15%" width="130%" height="130%"
+            color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.038" numOctaves="4"
+                    seed="55" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="3.1"
+                         xChannelSelector="R" yChannelSelector="G" result="carved"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.62" numOctaves="3"
+                    seed="72" result="grain"/>
+      <feColorMatrix in="grain" type="luminanceToAlpha" result="ga"/>
+      <feComponentTransfer in="ga" result="pits">
+        <feFuncA type="linear" slope="3.1" intercept="-1.72"/>
+      </feComponentTransfer>
+      <feComposite in="carved" in2="pits" operator="out"/>
+    </filter></defs>
+    <g filter="url(#ink-stack-0)" transform="translate(1.4 -0.9)"
+       stroke="var(--ink)" fill="none" stroke-linecap="round" stroke-linejoin="round"
+       opacity="0.9">
+      <path d="M52,34 L78,49 L78,79 L52,94 L26,79 L26,49 Z" stroke-width="3"/>
+      <path d="M120,34 L146,94 L94,94 Z" stroke-width="3"/>
+      <circle cx="188" cy="64" r="30" stroke-width="3"/>
+    </g>
+    <g filter="url(#ink-stack-1)" transform="translate(-1.2 1.1)"
+       stroke="var(--ink-slate)" fill="none" stroke-linecap="round" stroke-linejoin="round"
+       opacity="0.9">
+      <line x1="16" y1="118" x2="224" y2="118" stroke-width="2.6"/>
+      <line x1="52" y1="112" x2="52" y2="124" stroke-width="2"/>
+      <line x1="120" y1="112" x2="120" y2="124" stroke-width="2"/>
+      <line x1="188" y1="112" x2="188" y2="124" stroke-width="2"/>
+    </g>
+    <g filter="url(#ink-stack-2)" transform="translate(0.7 1.4)"
+       stroke="var(--ink-ochre)" fill="none" stroke-linecap="round" stroke-linejoin="round"
+       opacity="0.9">
+      <line x1="176" y1="64" x2="200" y2="64" stroke-width="2.4"/>
+      <line x1="188" y1="52" x2="188" y2="76" stroke-width="2.4"/>
+    </g>
+</svg></div>
+      <div class="poster-meta">
+        <p class="loc">THE INSTRUMENT BUS</p>
+        <p class="no">No. 09</p>
+        <p class="keys">WAREHOUSE · MODEL · SURFACE</p>
+        <p class="yr">2018—2026</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note-body"><div class="note-main">
+  <section class="note-section">
+    <p class="lede">A tool list says nothing on its own. What matters is which layer it sits in and
+    what breaks without it — so this reads bottom-up, from where the data rests to where somebody
+    finally asks it a question.</p>
+  </section>
+
+  <section class="note-section" id="warehouse">
+    <h3>Warehouse</h3>
+    <ul class="chips">
+      <li class="chip">Snowflake</li>
+      <li class="chip">Postgres</li>
+    </ul>
+    <p class="prose" style="margin-top:12px">Moved the analytical estate off an OLTP Postgres system onto Snowflake, because a database optimised for writing transactions is the wrong place to ask questions.</p>
+  </section>
+  <section class="note-section" id="modeling">
+    <h3>Modeling</h3>
+    <ul class="chips">
+      <li class="chip">dbt</li>
+      <li class="chip">SQL / SOQL</li>
+    </ul>
+    <p class="prose" style="margin-top:12px">dbt for staging, base, mart and semantic layers. SQL since the warehouse tables at Zayo; SOQL because inventory lived in Salesforce.</p>
+  </section>
+  <section class="note-section" id="sources">
+    <h3>Source systems</h3>
+    <ul class="chips">
+      <li class="chip">Salesforce</li>
+    </ul>
+    <p class="prose" style="margin-top:12px">Six years of it — object automation for fiber inventory, the Salesforce One overhaul, metric objects fed from warehouse tables, and three acquisitions merged into it.</p>
+  </section>
+  <section class="note-section" id="analysis">
+    <h3>Analysis</h3>
+    <ul class="chips">
+      <li class="chip">Hex</li>
+      <li class="chip">Tableau</li>
+    </ul>
+    <p class="prose" style="margin-top:12px">Hex as the self-serve and conversational surface. Tableau for the board-facing dashboards that get read in the room where decisions happen.</p>
+  </section>
+  <section class="note-section" id="languages">
+    <h3>Languages</h3>
+    <ul class="chips">
+      <li class="chip">Python</li>
+    </ul>
+    <p class="prose" style="margin-top:12px">For the transformation and validation work that does not belong in SQL.</p>
+  </section>
+  <section class="note-section" id="delivery">
+    <h3>Delivery</h3>
+    <ul class="chips">
+      <li class="chip">Jira</li>
+      <li class="chip">Confluence</li>
+      <li class="chip">GitLab</li>
+    </ul>
+    <p class="prose" style="margin-top:12px">Scrum product ownership: backlog, roadmap, requirements, and the written record that makes a decision survive the person who made it.</p>
+  </section>
+  <section class="note-section" id="ai">
+    <h3>AI harness</h3>
+    <ul class="chips">
+      <li class="chip">Claude Code</li>
+      <li class="chip">Cortex Code</li>
+      <li class="chip">Codex</li>
+    </ul>
+    <p class="prose" style="margin-top:12px">Autonomous agents executing analytical tasks end to end. They work because the layers underneath are governed — an agent asking for revenue gets the number a human would.</p>
+  </section>
+
+  </div><aside class="note-rail">
+    <section class="rail-block">
+      <h3>Read the map</h3>
+      <p class="rail-meta">Every instrument here appears on the survey map as a tick on the
+      instrument bus, running beneath the pipeline.</p>
+      <a class="panel-cta" href="index.html">Survey map →</a>
+    </section>
+  </aside></div>
+
+  <nav class="station-nav" aria-label="Stations">
+    <a href="roles/upstack-data-platform.html"><span class="dir label">← Previous station</span><span class="ttl">Manager, Data Platform &amp; Operations</span></a>
+    <a class="next" href="index.html"><span class="dir label">Back to the map →</span><span class="ttl">The survey</span></a>
+  </nav>
+  <footer class="colophon">
+    <div class="col">
+      <span class="label">Chronology</span>
+      <ul class="source-list">
+        <li><a href="roles/upstack-data-platform.html">Manager, Data Platform &amp; Operations</a> — UPSTACK, Jun 2025 – Present</li>
+        <li><a href="roles/upstack-ma-integration.html">M&amp;A Integration Analyst</a> — UPSTACK, Apr 2024 – May 2025</li>
+        <li><a href="roles/lightpath.html">Sr. Project Manager</a> — Lightpath, Jun 2023 – Apr 2024</li>
+        <li><a href="roles/zayo-product.html">Technical Product Manager / Scrum PO</a> — Zayo Group, Oct 2021 – Jun 2023</li>
+        <li><a href="roles/zayo-analyst.html">Business Analyst</a> — Zayo Group, Sep 2020 – Sep 2021</li>
+        <li><a href="origins.html">Data Analyst Intern</a> — Zayo Group, Jun 2020 – Aug 2020</li>
+        <li><a href="origins.html">Policy Intern, Designing for Defense</a> — U.S. DoD, Dec 2018 – Jun 2019</li>
+      </ul>
+    </div>
+    <div class="col">
+      <span class="label">Contact</span>
+      <ul class="source-list">
+        <li><a href="mailto:thomaskaras518@gmail.com">thomaskaras518@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/thomas-karas-b17445179/" rel="me noopener">linkedin.com/in/thomas-karas</a></li>
+        <li><a href="assets/ThomasKaras-Resume-2026.pdf">Resume (PDF) ↓</a></li>
+      </ul>
+    </div>
+    <div class="col">
+      <span class="label">The survey</span>
+      <ul class="source-list">
+        <li><a href="index.html">← Return to the survey map</a></li>
+        <li><a href="stack.html">The instrument bus</a></li>
+      </ul>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

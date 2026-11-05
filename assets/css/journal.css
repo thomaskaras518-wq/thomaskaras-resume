@@ -1,0 +1,698 @@
+/* ============================================================
+   FIELD SURVEY — journal.css
+   A warm-paper, typewriter-set design system for an isometric
+   career survey. No build step, no dependencies.
+   ============================================================ */
+
+/* ---------- 1. TOKENS ---------- */
+
+:root {
+  /* paper */
+  --paper:        #efe7d6;
+  --paper-deep:   #e3d8c0;
+  --paper-sunk:   #d9cdb2;
+  --rule:         #cabb9c;
+  --rule-soft:    #ded2b8;
+
+  /* ink */
+  --ink:          #1c1814;
+  --ink-soft:     #5a5145;
+  --ink-faint:    #8b8071;
+
+  /* spot inks — desaturated, per the field-note spec */
+  --ink-green:    #3d5443;
+  --ink-brick:    #9c4230;
+  --ink-ochre:    #b8873a;
+  --ink-slate:    #4a6274;
+  --ink-taupe:    #7d6a56;
+
+  /* roles */
+  --accent:       var(--ink-brick);
+  --marker:       #e0c96a;
+
+  /* type */
+  --font-mono:  'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-type:  'Courier Prime', 'Courier New', Courier, monospace;
+  --font-serif: 'Spectral', Georgia, 'Times New Roman', serif;
+
+  /* metrics */
+  --chrome-pad: 14px;
+  --hair: 1px solid var(--rule);
+  --hair-soft: 1px solid var(--rule-soft);
+}
+
+/* Low-light variant: a dimmed lamp on the same paper, never an inversion. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:      #1a1712;
+    --paper-deep: #211d17;
+    --paper-sunk: #14110d;
+    --rule:       #453d31;
+    --rule-soft:  #332c23;
+
+    --ink:        #e9dcc1;
+    --ink-soft:   #b3a68c;
+    --ink-faint:  #7d7361;
+
+    --ink-green:  #7fa287;
+    --ink-brick:  #d4795f;
+    --ink-ochre:  #d9ab5c;
+    --ink-slate:  #7fa0b8;
+    --ink-taupe:  #b09a80;
+
+    --marker:     #6b5a25;
+  }
+}
+
+/* ---------- 2. RESET ---------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+/* Paper: graph grid + vignette, then a fixed grain plate over everything. */
+body {
+  background-image:
+    repeating-linear-gradient(0deg,  transparent 0 23px, var(--rule-soft) 23px 24px),
+    repeating-linear-gradient(90deg, transparent 0 23px, var(--rule-soft) 23px 24px),
+    radial-gradient(120% 90% at 50% 0%, transparent 45%, rgba(0,0,0,.06) 100%);
+  background-attachment: fixed;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: .26;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@media (prefers-color-scheme: dark) {
+  body::after { mix-blend-mode: screen; opacity: .13; }
+}
+
+/* ---------- 3. TYPE PRIMITIVES ---------- */
+
+.mono   { font-family: var(--font-mono); }
+.type   { font-family: var(--font-type); }
+
+/* The small uppercase mono label that runs the whole interface. */
+.label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  line-height: 1.4;
+}
+
+h1, h2, h3, h4 { font-weight: 500; line-height: 1.22; margin: 0; }
+h1 { font-size: 1.9rem; letter-spacing: -.01em; }
+h2 { font-size: 1.3rem; }
+h3 { font-family: var(--font-mono); font-size: .78rem; letter-spacing: .13em;
+     text-transform: uppercase; color: var(--ink-faint); }
+p { margin: 0 0 .95em; }
+p:last-child { margin-bottom: 0; }
+
+/* Marker highlight, as in the reference panels. */
+mark {
+  background: linear-gradient(0deg, var(--marker) 0%, var(--marker) 100%);
+  background-size: 100% 62%;
+  background-repeat: no-repeat;
+  background-position: 0 88%;
+  color: inherit;
+  padding: 0 .1em;
+}
+
+/* ---------- 4. FOCUS ---------- */
+
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--ink-brick);
+  outline-offset: 2px;
+}
+.skip {
+  position: absolute; left: -9999px; top: 0; z-index: 10000;
+  background: var(--paper); color: var(--ink);
+  padding: 10px 14px; border: var(--hair); font-family: var(--font-mono); font-size: 12px;
+}
+.skip:focus { left: 8px; top: 8px; }
+
+/* ---------- 5. HUB CHROME (four zones) ---------- */
+
+.chrome {
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr) 348px;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "readout readout readout"
+    "index   canvas  panel"
+    "foot    foot    foot";
+  height: 100dvh;
+  min-height: 560px;
+}
+
+/* 5a. Top readout strip */
+.readout {
+  grid-area: readout;
+  display: flex;
+  align-items: stretch;
+  border-bottom: var(--hair);
+  background: var(--paper-deep);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.readout-mark {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px var(--chrome-pad);
+  border-right: var(--hair);
+  flex: 0 0 auto;
+}
+.readout-mark strong {
+  font-family: var(--font-mono); font-weight: 600;
+  font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+}
+.readout-mark .badge {
+  font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .12em;
+  border: 1px solid var(--ink); padding: 2px 5px; text-transform: uppercase;
+}
+.cell {
+  padding: 9px 16px;
+  border-right: var(--hair-soft);
+  flex: 0 0 auto;
+  min-width: 0;
+}
+.cell dt { margin: 0 0 3px; }
+.cell dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.readout .spacer { flex: 1 1 auto; border-right: 0; }
+
+/* 5b. Left index sidebar */
+.index {
+  grid-area: index;
+  border-right: var(--hair);
+  overflow-y: auto;
+  padding: 12px 0 24px;
+  background: color-mix(in srgb, var(--paper-deep) 45%, transparent);
+}
+.index-group { margin-bottom: 14px; }
+.index-group > .label { padding: 0 var(--chrome-pad) 6px; display: block; }
+.index-item {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%;
+  padding: 5px var(--chrome-pad);
+  border: 0; background: none; text-align: left;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--ink-soft);
+  cursor: pointer; text-decoration: none;
+  border-left: 2px solid transparent;
+}
+.index-item:hover, .index-item:focus-visible {
+  background: var(--paper-deep); color: var(--ink);
+  border-left-color: var(--ink-brick);
+}
+.index-item[aria-current="true"] {
+  background: var(--paper-deep); color: var(--ink);
+  border-left-color: var(--ink-brick);
+}
+.index-item .n {
+  margin-left: auto;
+  font-size: 9.5px; color: var(--ink-faint);
+  border: 1px solid var(--rule); padding: 0 4px; min-width: 20px; text-align: center;
+}
+
+/* 5c. Center canvas */
+.canvas {
+  grid-area: canvas;
+  position: relative;
+  overflow: auto;
+  background:
+    radial-gradient(80% 60% at 50% 42%, color-mix(in srgb, var(--paper) 80%, transparent) 0%, transparent 100%);
+}
+.canvas-inner { min-width: 900px; padding: 8px 16px 20px; }
+.canvas svg { width: 100%; height: auto; display: block; }
+
+.zoomer {
+  position: absolute; right: 12px; bottom: 12px;
+  display: flex; flex-direction: column; border: var(--hair); background: var(--paper);
+}
+.zoomer button {
+  width: 26px; height: 26px; border: 0; background: none; cursor: pointer;
+  font-family: var(--font-mono); font-size: 13px; color: var(--ink);
+}
+.zoomer button + button { border-top: var(--hair); }
+.zoomer button:hover { background: var(--paper-deep); }
+
+/* 5d. Right explainer panel */
+.panel {
+  grid-area: panel;
+  border-left: var(--hair);
+  overflow-y: auto;
+  background: color-mix(in srgb, var(--paper-deep) 45%, transparent);
+  display: flex; flex-direction: column;
+}
+.tabs { display: flex; border-bottom: var(--hair); flex: 0 0 auto; }
+.tab {
+  flex: 1 1 0; padding: 9px 10px; border: 0; border-right: var(--hair-soft);
+  background: none; cursor: pointer;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-faint);
+}
+.tab:last-child { border-right: 0; }
+.tab[aria-selected="true"] { background: var(--paper); color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink-brick); }
+.panel-body { padding: 16px var(--chrome-pad) 28px; }
+.panel-body > .label { display: block; margin-bottom: 6px; }
+.panel-title { font-size: 1.22rem; margin-bottom: 4px; }
+.panel-meta {
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-faint);
+  margin-bottom: 14px; padding-bottom: 12px; border-bottom: var(--hair-soft);
+}
+.panel-body p { font-size: 14px; line-height: 1.62; }
+.panel-section { margin-top: 18px; padding-top: 14px; border-top: var(--hair-soft); }
+.panel-section > .label { display: block; margin-bottom: 8px; }
+.source-list { list-style: none; margin: 0; padding: 0; }
+.source-list li {
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-soft);
+  padding: 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.panel-cta {
+  display: inline-block; margin-top: 16px;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+  border: 1px solid var(--ink); padding: 8px 12px; text-decoration: none;
+  background: var(--paper);
+}
+.panel-cta:hover { background: var(--ink); color: var(--paper); }
+
+/* 5e. Bottom legend + hints */
+.foot {
+  grid-area: foot;
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  padding: 7px var(--chrome-pad);
+  border-top: var(--hair);
+  background: var(--paper-deep);
+}
+.legend { display: flex; gap: 14px; flex-wrap: wrap; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 18px; height: 0; border-top: 2px solid var(--ink-soft); display: inline-block; }
+.legend .l-flow   i { border-top-color: var(--ink-slate); }
+.legend .l-support i { border-top-style: dashed; border-top-color: var(--ink-taupe); }
+.legend .l-gov    i { border-top-color: var(--ink-green); }
+.legend .l-payload i { border: 0; width: 7px; height: 7px; background: var(--ink-brick);
+                       transform: rotate(45deg); }
+.hints { margin-left: auto; }
+
+/* ---------- 6. CHIPS, STAMPS, CALLOUTS ---------- */
+
+.chips { display: flex; flex-wrap: wrap; gap: 5px; margin: 0; padding: 0; list-style: none; }
+.chip {
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .09em; text-transform: uppercase;
+  border: 1px solid var(--rule); background: var(--paper);
+  padding: 3px 7px; color: var(--ink-soft); text-decoration: none;
+  display: inline-block;
+}
+a.chip:hover { border-color: var(--ink); color: var(--ink); }
+
+/* Rubber-stamped metric block. */
+.stamped {
+  border: 2px solid var(--ink-brick);
+  color: var(--ink-brick);
+  padding: 10px 12px;
+  font-family: var(--font-mono);
+  transform: rotate(-1.2deg);
+  display: inline-block;
+  opacity: .92;
+}
+.stamped b { display: block; font-size: 1.35rem; font-weight: 600; letter-spacing: -.01em; }
+.stamped span { font-size: 9px; letter-spacing: .13em; text-transform: uppercase; }
+
+.results { display: flex; flex-wrap: wrap; gap: 18px 22px; }
+.results .stamped:nth-child(2n) { transform: rotate(.9deg); border-color: var(--ink-green); color: var(--ink-green); }
+.results .stamped:nth-child(3n) { transform: rotate(-.5deg); border-color: var(--ink-slate); color: var(--ink-slate); }
+
+/* ---------- 7. FIELD-NOTE PAGE (58 / 42) ---------- */
+
+.note-page { max-width: 1180px; margin: 0 auto; padding: 0 20px 72px; }
+
+.topbar {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 10px 0; margin-bottom: 22px;
+  border-bottom: var(--hair);
+}
+.topbar a { text-decoration: none; }
+.topbar .back {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.topbar .back:hover { color: var(--ink); }
+.topbar .station-no { margin-left: auto; }
+
+/* The poster: photo left 58%, aged paper right 42%, no dividing rule. */
+.poster {
+  display: grid;
+  grid-template-columns: 58fr 42fr;
+  align-items: stretch;
+  background: var(--paper-deep);
+  border: var(--hair);
+  margin-bottom: 34px;
+}
+.poster-plate { position: relative; overflow: hidden; min-height: 340px; background: var(--paper-sunk); }
+.poster-plate img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Placeholder when no photograph has been supplied yet. */
+.plate-pending {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 11px, color-mix(in srgb, var(--rule) 40%, transparent) 11px 12px),
+    var(--paper-sunk);
+  color: var(--ink-faint);
+  text-align: center; padding: 24px;
+}
+.plate-pending .box { width: 46px; height: 46px; border: 1px solid var(--ink-faint); }
+
+.poster-paper {
+  padding: 30px 30px 26px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: 340px;
+}
+.poster-stamp { margin-bottom: 26px; }
+.poster-stamp svg { width: 100%; height: auto; max-width: 240px; }
+
+/* Typewriter metadata: location · No. · keywords · year */
+.poster-meta { font-family: var(--font-type); color: var(--ink); }
+.poster-meta .loc {
+  font-size: 13px; letter-spacing: .07em; text-transform: uppercase; margin-bottom: 5px;
+}
+.poster-meta .no,
+.poster-meta .keys,
+.poster-meta .yr {
+  font-size: 10.5px; letter-spacing: .1em; color: var(--ink-soft); margin-bottom: 3px;
+}
+.poster-meta .keys { text-transform: uppercase; }
+
+/* Body of a field note */
+.note-head { margin-bottom: 26px; }
+.note-head h1 { margin-bottom: 6px; }
+.note-head .org {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em;
+  color: var(--ink-soft);
+}
+.note-section { margin-bottom: 34px; }
+.note-section > h3 { margin-bottom: 12px; padding-bottom: 7px; border-bottom: var(--hair-soft); }
+.obs { list-style: none; margin: 0; padding: 0; max-width: 74ch; }
+.obs li {
+  position: relative; padding-left: 32px; margin-bottom: 14px;
+  font-size: 15.5px; line-height: 1.62;
+}
+.obs li::before {
+  content: counter(obs, decimal-leading-zero);
+  counter-increment: obs;
+  position: absolute; left: 0; top: .28em;
+  font-family: var(--font-mono); font-size: 9.5px; color: var(--ink-faint);
+  border: 1px solid var(--rule); border-radius: 50%;
+  width: 20px; height: 20px; display: grid; place-items: center;
+}
+.obs { counter-reset: obs; }
+
+.prose { max-width: 70ch; }
+
+/* Prev / next station navigation */
+.station-nav {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  border-top: var(--hair); padding-top: 18px; margin-top: 40px;
+}
+.station-nav a {
+  flex: 1 1 240px; text-decoration: none; border: var(--hair);
+  padding: 12px 14px; background: var(--paper-deep);
+}
+.station-nav a:hover { border-color: var(--ink); }
+.station-nav .dir { display: block; margin-bottom: 4px; }
+.station-nav .ttl { font-family: var(--font-mono); font-size: 12px; }
+.station-nav .next { text-align: right; }
+
+/* ---------- 8. CONTACT STRIP ---------- */
+
+.colophon {
+  border-top: var(--hair); margin-top: 48px; padding: 22px 0 0;
+  display: flex; gap: 26px; flex-wrap: wrap; align-items: flex-start;
+}
+.colophon .col { min-width: 190px; }
+.colophon .col > .label { display: block; margin-bottom: 6px; }
+.colophon a { font-family: var(--font-mono); font-size: 12px; }
+
+/* ---------- 9. DIAGRAM (SVG-side styling) ---------- */
+
+.node { cursor: pointer; }
+.node .box-face { fill: var(--paper); stroke: var(--ink); stroke-width: 1.15; }
+.node .box-top  { fill: color-mix(in srgb, var(--paper) 88%, var(--ink) 12%); }
+.node .box-left { fill: color-mix(in srgb, var(--paper) 80%, var(--ink) 20%); }
+.node .node-label {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .05em;
+  fill: var(--ink); text-transform: uppercase;
+}
+.node .node-sub {
+  font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .06em;
+  fill: var(--ink-faint);
+}
+.node:hover .box-face,
+.node:focus-visible .box-face { stroke-width: 2; stroke: var(--ink-brick); }
+.node:hover .box-top { fill: color-mix(in srgb, var(--marker) 34%, var(--paper)); }
+
+.link { fill: none; stroke: var(--ink-slate); stroke-width: 1.6; stroke-linecap: round; }
+.link.support { stroke: var(--ink-taupe); stroke-dasharray: 4 4; stroke-width: 1.1; }
+.link.gov     { stroke: var(--ink-green); }
+
+.district-label {
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .16em;
+  fill: var(--ink-faint); text-transform: uppercase;
+}
+.callout {
+  font-family: var(--font-type); font-size: 10.5px; fill: var(--ink-soft);
+}
+.callout-leader { stroke: var(--ink-faint); stroke-width: .8; stroke-dasharray: 2 3; fill: none; }
+.grid-line { stroke: var(--rule); stroke-width: .6; fill: none; }
+
+/* Dimming when a node is selected (JS adds .is-focused to the root <svg>) */
+.is-focused .node { opacity: .34; transition: opacity .16s ease; }
+.is-focused .node.on { opacity: 1; }
+.is-focused .link { opacity: .18; }
+.is-focused .link.on { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .001ms !important; animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important; }
+}
+
+/* ---------- 10. RESPONSIVE ---------- */
+
+.only-narrow { display: none; }
+
+@media (max-width: 900px) {
+  .chrome {
+    display: block;
+    height: auto;
+    min-height: 0;
+  }
+  .readout { flex-wrap: wrap; overflow-x: visible; }
+  .cell { flex: 1 1 44%; }
+  .index, .panel { border: 0; border-top: var(--hair); overflow: visible; }
+  .index { padding-top: 16px; }
+  .canvas { overflow: visible; }
+  .canvas-inner { min-width: 0; padding: 12px 0 4px; }
+  .zoomer { display: none; }
+  .foot { position: static; }
+  .hints { display: none; }
+
+  .only-wide { display: none !important; }
+  .only-narrow { display: block; }
+
+  .poster { grid-template-columns: 1fr; }
+  .poster-plate { min-height: 240px; }
+  .poster-paper { min-height: 0; padding: 24px 22px; }
+}
+
+@media (max-width: 560px) {
+  body { font-size: 15px; }
+  h1 { font-size: 1.5rem; }
+  .cell { flex: 1 1 100%; }
+  .note-page { padding: 0 15px 56px; }
+  .obs li { font-size: 15px; }
+}
+
+/* ---------- 11. PRINT ---------- */
+
+@media print {
+  body::after, .foot, .zoomer, .index, .tabs { display: none; }
+  .chrome { display: block; height: auto; }
+  body { background: #fff; color: #000; }
+}
+
+/* ---------- 12. NARROW-SCREEN PIPELINE (diagram fallback) ---------- */
+
+.pipe { padding: 4px 0 8px; }
+.pipe-stage { margin-bottom: 20px; }
+.pipe-stage > .label {
+  display: block; margin-bottom: 8px; padding-bottom: 5px;
+  border-bottom: var(--hair-soft);
+}
+.pipe-node {
+  display: block; text-decoration: none;
+  border: var(--hair); border-left: 3px solid var(--ink-slate);
+  background: var(--paper-deep);
+  padding: 11px 13px; margin-bottom: 7px;
+}
+.pipe-node:hover { border-left-color: var(--ink-brick); }
+.pipe-label {
+  display: block; font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: .04em; color: var(--ink);
+}
+.pipe-sub {
+  display: block; font-family: var(--font-mono); font-size: 9.5px;
+  letter-spacing: .07em; color: var(--ink-faint); margin-top: 3px;
+}
+
+/* ---------- 13. DIAGRAM EXTRAS ---------- */
+
+.node.current .box-face { stroke-width: 1.7; }
+.node.current .box-top  { fill: color-mix(in srgb, var(--marker) 26%, var(--paper)); }
+.node.is-selected .box-face { stroke: var(--ink-brick); stroke-width: 2; }
+.node.is-selected .box-top  { fill: color-mix(in srgb, var(--ink-brick) 15%, var(--paper)); }
+
+a.tool text { cursor: pointer; }
+a.tool:hover text { fill: var(--ink); text-decoration: underline; }
+
+.canvas.is-grabbing { cursor: grabbing; }
+.canvas .survey { cursor: grab; }
+
+/* Panel "open field note" button, shown once a station is selected. */
+.panel-open { display: none; }
+.panel-open.on { display: inline-block; }
+
+/* ---------- 14. CANVAS FIT + INSTRUMENT BUS ---------- */
+
+/* Let the SVG letterbox itself inside the canvas instead of leaving dead space
+   below it. preserveAspectRatio (xMidYMid meet) does the centring. */
+.canvas-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+.canvas svg.survey { width: 100%; height: 100%; min-height: 0; flex: 1 1 auto; }
+
+.bus {
+  flex: 0 0 auto;
+  border-top: var(--hair-soft);
+  padding-top: 8px;
+}
+.bus > .label { display: block; margin-bottom: 6px; }
+.bus-rail {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 0;
+  border-top: 1px dashed var(--rule);
+}
+.bus-rail li { position: relative; padding: 8px 14px 0 0; }
+.bus-rail li::before {
+  content: ""; position: absolute; top: 0; left: 0;
+  width: 1px; height: 6px; background: var(--rule);
+}
+.bus-rail a {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-faint); text-decoration: none;
+}
+.bus-rail a:hover { color: var(--ink); text-decoration: underline; }
+
+.plate-note { letter-spacing: .08em; }
+
+@media (max-width: 900px) {
+  .canvas-inner { height: auto; display: block; }
+  .bus { margin-top: 18px; }
+}
+
+/* ---------- 15. FIELD-NOTE BODY: MAIN + MARGIN RAIL ---------- */
+
+.note-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  gap: 46px;
+  align-items: start;
+}
+.note-main { min-width: 0; }
+
+.lede {
+  font-size: 1.15rem;
+  line-height: 1.55;
+  max-width: 62ch;
+  color: var(--ink);
+  margin-bottom: 34px;
+  padding-bottom: 26px;
+  border-bottom: var(--hair-soft);
+}
+
+.note-rail {
+  position: sticky;
+  top: 20px;
+  border-left: var(--hair);
+  padding-left: 20px;
+}
+.rail-block { margin-bottom: 28px; }
+.rail-block > h3 { margin-bottom: 11px; }
+.rail-block .results { flex-direction: column; gap: 14px; align-items: flex-start; }
+.rail-block .stamped { display: block; }
+.rail-block .stamped b { font-size: 1.15rem; }
+.rail-meta {
+  font-family: var(--font-mono); font-size: 11px; line-height: 1.8;
+  color: var(--ink-soft);
+}
+.note-rail .panel-cta { margin-top: 12px; font-size: 9.5px; }
+
+@media (max-width: 900px) {
+  .note-body { grid-template-columns: 1fr; gap: 0; }
+  .note-rail {
+    position: static; border-left: 0; padding-left: 0;
+    border-top: var(--hair); padding-top: 22px; margin-top: 10px;
+  }
+  .rail-block .results { flex-direction: row; flex-wrap: wrap; }
+  .lede { font-size: 1.05rem; }
+}
+
+/* ---------- 16. NARROW-SCREEN ORDERING ---------- */
+
+/* On a phone the pipeline is the content — it must not sit below seven stat
+   rows and a full index. Reorder so it comes straight after the masthead. */
+@media (max-width: 900px) {
+  .chrome { display: flex; flex-direction: column; }
+  .readout { order: 1; }
+  .canvas  { order: 2; padding: 16px var(--chrome-pad) 4px; }
+  .panel   { order: 3; }
+  .index   { order: 4; }
+  .foot    { order: 5; }
+
+  /* the live readout cell only means something with a pointer */
+  #selected-cell { display: none; }
+
+  .cell { flex: 1 1 42%; padding: 8px 14px; }
+  .readout-mark { flex: 1 1 100%; border-right: 0; border-bottom: var(--hair-soft); }
+}
+
+@media (max-width: 560px) {
+  .cell { flex: 1 1 42%; }
+}
